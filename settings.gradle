@@ -1,0 +1,5 @@
+rootProject.name = 'api-documentation'
+
+include 'api-documentation-springdoc'
+include 'api-documentation-restdocs'
+include 'api-documentation-combine'

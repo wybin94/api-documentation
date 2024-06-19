@@ -1,0 +1,52 @@
+openapi: 3.0.1
+info:
+  title: My API
+  description: My API description
+  version: 0.1.0
+servers:
+- url: http://localhost:8080
+tags: []
+paths:
+  /members:
+    get:
+      tags:
+      - members
+      operationId: member-controller-api-spec-test/get-members
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/members486549215'
+              examples:
+                member-controller-api-spec-test/get-members:
+                  value: "[{\"id\":\"John\",\"name\":\"존\",\"age\":30},{\"id\":\"\
+                    Jane\",\"name\":\"제인\",\"age\":31},{\"id\":\"Jack\",\"name\":\"\
+                    잭\",\"age\":32},{\"id\":\"Wack\",\"name\":\"왝\",\"age\":33}]"
+  /members/{id}:
+    get:
+      tags:
+      - members
+      operationId: member-controller-api-spec-test/get-member-by-id
+      parameters:
+      - name: id
+        in: path
+        description: ""
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/members486549215'
+              examples:
+                member-controller-api-spec-test/get-member-by-id:
+                  value: "{\"id\":\"John\",\"name\":\"존\",\"age\":30}"
+components:
+  schemas:
+    members486549215:
+      type: object

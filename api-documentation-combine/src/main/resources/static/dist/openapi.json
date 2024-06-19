@@ -1,0 +1,175 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "OpenAPI definition",
+    "version": "v0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080",
+      "description": "Generated server url"
+    }
+  ],
+  "tags": [
+    {
+      "name": "rootController @Tag name",
+      "description": "rootController @Tag description"
+    },
+    {
+      "name": "MemberController",
+      "description": "this is member controller"
+    }
+  ],
+  "paths": {
+    "/{statusCode}": {
+      "get": {
+        "tags": [
+          "rootController @Tag name"
+        ],
+        "summary": "statusCode",
+        "description": "statusCode를 넘기면 반환",
+        "operationId": "statusCode",
+        "parameters": [
+          {
+            "name": "statusCode",
+            "in": "path",
+            "description": "Member ID",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "Member ID",
+              "example": 1
+            },
+            "example": 1
+          }
+        ],
+        "responses": {
+          "500": {
+            "description": "존재하지 않는 status Code",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/members": {
+      "get": {
+        "tags": [
+          "MemberController"
+        ],
+        "summary": "get all members",
+        "description": "모든 멤버 조회",
+        "operationId": "getMembers",
+        "responses": {
+          "500": {
+            "description": "서버 오류"
+          },
+          "200": {
+            "description": "모든 멤버들을 반환한다",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Member"
+                  }
+                }
+              },
+              "text/html": {
+                "schema": {
+                  "$ref": "#/components/schemas/Member"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/members/{id}": {
+      "get": {
+        "tags": [
+          "MemberController"
+        ],
+        "operationId": "getMemberById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "아이디",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "아이디"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "존재하지 않는 멤버",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/": {
+      "get": {
+        "tags": [
+          "rootController @Tag name"
+        ],
+        "summary": "root @Operation summary",
+        "description": "root @Operation description",
+        "operationId": "root",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Member": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

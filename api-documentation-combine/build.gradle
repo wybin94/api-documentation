@@ -1,0 +1,63 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.1.11'
+    id 'io.spring.dependency-management' version '1.1.4'
+    id 'org.asciidoctor.jvm.convert' version '3.3.2'
+    id 'com.epages.restdocs-api-spec' version '0.18.2'
+}
+
+group = 'api-documentation-combine'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    sourceCompatibility = '17'
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+    asciidoctorExtCustomName
+}
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    set('snippetsDir', file("build/generated-snippets"))
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+//    implementation('org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0')
+
+    asciidoctorExtCustomName('org.springframework.restdocs:spring-restdocs-asciidoctor') //asciidoctorExtCustomName 주입
+    testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+    testImplementation('com.epages:restdocs-api-spec-mockmvc:0.18.2') //2.2
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.named('test') {
+    outputs.dir snippetsDir
+    useJUnitPlatform()
+}
+
+tasks.named('asciidoctor') {
+    inputs.dir snippetsDir
+    configurations 'asciidoctorExtCustomName'
+    dependsOn test
+}
+
+openapi3 {
+    server = 'https://localhost:8080'
+    title = 'My API'
+    description = 'My API description'
+//    tagDescriptionsPropertiesFile = 'src/docs/tag-descriptions.yaml'
+    version = '0.1.0'
+    format = 'yaml'
+}

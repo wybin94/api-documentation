@@ -1,0 +1,2 @@
+// === get-member-by-id
+operation::/member-controller-test/get-member-by-id[]

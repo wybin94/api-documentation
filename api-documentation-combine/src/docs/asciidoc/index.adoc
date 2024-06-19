@@ -1,0 +1,22 @@
+ifndef::snippets[]
+:snippets: ./build/generated-snippets
+endif::[]
+
+= REST Docs 문서 만들기 (글의 제목)
+:toc-title: COMBINE 도큐먼트
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
+:sectlinks:
+
+== 회원
+
+=== 모든 멤버 조회
+operation::/member-controller-test/get-members[]
+// include::get-members.adoc[]
+=== 멤버 아이디로 조회
+operation::/member-controller-test/get-member-by-id[]
+
+
